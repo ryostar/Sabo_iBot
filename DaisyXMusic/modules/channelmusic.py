@@ -60,35 +60,35 @@ chat_id = None
 
 
 
-@Client.on_message(filters.command(["channelplaylist","cplaylist"]) & filters.group & ~filters.edited)
+@Client.on_message(filters.command(["cdanhsach","cplaylist"]) & filters.group & ~filters.edited)
 async def playlist(client, message):
     try:
       lel = await client.get_chat(message.chat.id)
       lol = lel.linked_chat.id
     except:
-      message.reply("Is this cat even linked?")
+      message.reply("Nhóm thấm chí còn chưa liên kết với kênh!")
       return
     global que
     queue = que.get(lol)
     if not queue:
-        await message.reply_text("Player is idle")
+        await message.reply_text("Người chơi không hoạt động")
     temp = []
     for t in queue:
         temp.append(t)
     now_playing = temp[0][0]
     by = temp[0][1].mention(style="md")
-    msg = "**Now Playing** in {}".format(lel.linked_chat.title)
+    msg = "**BẮT ĐẦU PHÁT NHẠC** in {}".format(lel.linked_chat.title)
     msg += "\n- " + now_playing
-    msg += "\n- Req by " + by
+    msg += "\n- Bởi " + by
     temp.pop(0)
     if temp:
         msg += "\n\n"
-        msg += "**Queue**"
+        msg += "**HÀNG CHỜ**"
         for song in temp:
             name = song[0]
             usr = song[1].mention(style="md")
             msg += f"\n- {name}"
-            msg += f"\n- Req by {usr}\n"
+            msg += f"\n- Bởi {usr}\n"
     await message.reply_text(msg)
 
 
@@ -101,10 +101,10 @@ def updated_stats(chat, queue, vol=100):
         stats = "Settings of **{}**".format(chat.title)
         if len(que) > 0:
             stats += "\n\n"
-            stats += "Volume : {}%\n".format(vol)
-            stats += "Songs in queue : `{}`\n".format(len(que))
-            stats += "Now Playing : **{}**\n".format(queue[0][0])
-            stats += "Requested by : {}".format(queue[0][1].mention)
+            stats += "Âm lượng : {}%\n".format(vol)
+            stats += Hàng chờ : `{}`\n".format(len(que))
+            stats += "Hiện tại : **{}**\n".format(queue[0][0])
+            stats += "Bởi : {}".format(queue[0][1].mention)
     else:
         stats = None
     return stats
@@ -124,29 +124,29 @@ def r_ply(type_):
                 InlineKeyboardButton("⏭", "cskip"),
             ],
             [
-                InlineKeyboardButton("Playlist 📖", "cplaylist"),
+                InlineKeyboardButton("Danh sách 📖", "cplaylist"),
             ],
-            [InlineKeyboardButton("❌ Close", "ccls")],
+            [InlineKeyboardButton("❌ Đóng", "ccls")],
         ]
     )
     return mar
 
 
-@Client.on_message(filters.command(["channelcurrent","ccurrent"]) & filters.group & ~filters.edited)
+@Client.on_message(filters.command(["kenhhientai","ccurrent"]) & filters.group & ~filters.edited)
 async def ee(client, message):
     try:
       lel = await client.get_chat(message.chat.id)
       lol = lel.linked_chat.id
       conv = lel.linked_chat
     except:
-      await message.reply("Is chat even linked")
+      await message.reply("Nhóm thấm chí còn chưa liên kết với kênh!")
       return
     queue = que.get(lol)
     stats = updated_stats(conv, queue)
     if stats:
         await message.reply(stats)
     else:
-        await message.reply("No VC instances running in this chat")
+        await message.reply("Không có phiên bản VC nào đang chạy trong cuộc trò chuyện này")
 
 
 @Client.on_message(filters.command(["channelplayer","cplayer"]) & filters.group & ~filters.edited)
@@ -158,7 +158,7 @@ async def settings(client, message):
       lol = lel.linked_chat.id
       conv = lel.linked_chat
     except:
-      await message.reply("Is chat even linked")
+      await message.reply("Nhóm thấm chí còn chưa liên kết với kênh!")
       return
     queue = que.get(lol)
     stats = updated_stats(conv, queue)
@@ -189,24 +189,24 @@ async def p_cb(b, cb):
     if type_ == "playlist":
         queue = que.get(lol)
         if not queue:
-            await cb.message.edit("Player is idle")
+            await cb.message.edit("Người chơi không hoạt động")
         temp = []
         for t in queue:
             temp.append(t)
         now_playing = temp[0][0]
         by = temp[0][1].mention(style="md")
-        msg = "**Now Playing** in {}".format(conv.title)
+        msg = "**BÀI HÁT HIỆN TẠI** in {}".format(conv.title)
         msg += "\n- " + now_playing
-        msg += "\n- Req by " + by
+        msg += "\n- Bởi " + by
         temp.pop(0)
         if temp:
             msg += "\n\n"
-            msg += "**Queue**"
+            msg += "**HÀNG CHỜ**"
             for song in temp:
                 name = song[0]
                 usr = song[1].mention(style="md")
                 msg += f"\n- {name}"
-                msg += f"\n- Req by {usr}\n"
+                msg += f"\n- bởi {usr}\n"
         await cb.message.edit(msg)
 
 
@@ -217,7 +217,7 @@ async def p_cb(b, cb):
 async def m_cb(b, cb):
     global que
     if (
-        cb.message.chat.title.startswith("Channel Music: ")
+        cb.message.chat.title.startswith("Kênh Nhạc: ")
         and chat.title[14:].isnumeric()
     ):
         chet_id = int(chat.title[13:])
@@ -244,7 +244,7 @@ async def m_cb(b, cb):
         else:
             callsmusic.pytgcalls.pause_stream(chet_id)
 
-            await cb.answer("Music Paused!")
+            await cb.answer("Nhạc tạm dừng!")
             await cb.message.edit(
                 updated_stats(conv, qeue), reply_markup=r_ply("play")
             )
@@ -253,10 +253,10 @@ async def m_cb(b, cb):
         if (chet_id not in callsmusic.pytgcalls.active_calls) or (
             callsmusic.pytgcalls.active_calls[chet_id] == "playing"
         ):
-            await cb.answer("Chat is not connected!", show_alert=True)
+            await cb.answer("Group chưa kết nối!", show_alert=True)
         else:
             callsmusic.pytgcalls.resume_stream(chet_id)
-            await cb.answer("Music Resumed!")
+            await cb.answer("Nhạc tiếp tục!")
             await cb.message.edit(
                 updated_stats(conv, qeue), reply_markup=r_ply("pause")
             )
@@ -264,31 +264,31 @@ async def m_cb(b, cb):
     elif type_ == "cplaylist":
         queue = que.get(cb.message.chat.id)
         if not queue:
-            await cb.message.edit("Player is idle")
+            await cb.message.edit("Người dùng không hoạt động")
         temp = []
         for t in queue:
             temp.append(t)
         now_playing = temp[0][0]
         by = temp[0][1].mention(style="md")
-        msg = "**Now Playing** in {}".format(cb.message.chat.title)
+        msg = "**BÀI HÁT HIỆN TẠI** in {}".format(cb.message.chat.title)
         msg += "\n- " + now_playing
-        msg += "\n- Req by " + by
+        msg += "\n- by " + by
         temp.pop(0)
         if temp:
             msg += "\n\n"
-            msg += "**Queue**"
+            msg += "*HÀNG CHỜ**"
             for song in temp:
                 name = song[0]
                 usr = song[1].mention(style="md")
                 msg += f"\n- {name}"
-                msg += f"\n- Req by {usr}\n"
+                msg += f"\n- by {usr}\n"
         await cb.message.edit(msg)
 
     elif type_ == "cresume":
         if (chet_id not in callsmusic.pytgcalls.active_calls) or (
             callsmusic.pytgcalls.active_calls[chet_id] == "playing"
         ):
-            await cb.answer("Chat is not connected or already playng", show_alert=True)
+            await cb.answer("Trò chuyện chưa được kết nối hoặc đã chơi", show_alert=True)
         else:
             callsmusic.pytgcalls.resume_stream(chet_id)
             await cb.answer("Music Resumed!")
@@ -302,12 +302,12 @@ async def m_cb(b, cb):
 
             await cb.answer("Music Paused!")
     elif type_ == "ccls":
-        await cb.answer("Closed menu")
+        await cb.answer("Đóng menu")
         await cb.message.delete()
 
     elif type_ == "cmenu":
         stats = updated_stats(conv, qeue)
-        await cb.answer("Menu opened")
+        await cb.answer("Menu đã mở")
         marr = InlineKeyboardMarkup(
             [
                 [
@@ -334,15 +334,15 @@ async def m_cb(b, cb):
             if callsmusic.queues.is_empty(chet_id):
                 callsmusic.pytgcalls.leave_group_call(chet_id)
 
-                await cb.message.edit("- No More Playlist..\n- Leaving VC!")
+                await cb.message.edit("- Không có gì trong Playlist..\n- Thoát VC!")
             else:
                 callsmusic.pytgcalls.change_stream(
                     chet_id, callsmusic.queues.get(chet_id)["file"]
                 )
-                await cb.answer("Skipped")
+                await cb.answer("Bỏ qua")
                 await cb.message.edit((m_chat, qeue), reply_markup=r_ply(the_data))
                 await cb.message.reply_text(
-                    f"- Skipped track\n- Now Playing **{qeue[0][0]}**"
+                    f"- Bỏ qua bài hát\n- Bắt đầu phát **{qeue[0][0]}**"
                 )
 
     else:
@@ -362,7 +362,7 @@ async def m_cb(b, cb):
 @authorized_users_only
 async def play(_, message: Message):
     global que
-    lel = await message.reply("🔄 **Processing**")
+    lel = await message.reply("🔄 **Đang xử lý**")
 
     try:
       conchat = await _.get_chat(message.chat.id)
@@ -427,7 +427,7 @@ async def play(_, message: Message):
     message.from_user.id
     text_links = None
     message.from_user.first_name
-    await lel.edit("🔎 **Finding**")
+    await lel.edit("🔎 **Tìm kiếm**")
     message.from_user.id
     user_id = message.from_user.id
     message.from_user.first_name
@@ -482,7 +482,7 @@ async def play(_, message: Message):
         )
     elif urls:
         query = toxt
-        await lel.edit("🎵 **Processing**")
+        await lel.edit("🎵 **Đang xử lý**")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
             results = YoutubeSearch(query, max_results=1).to_dict()
@@ -512,10 +512,10 @@ async def play(_, message: Message):
                     InlineKeyboardButton("Menu ⏯ ", callback_data="cmenu"),
                 ],
                 [
-                    InlineKeyboardButton(text="🎬 YouTube", url=f"{url}"),
-                    InlineKeyboardButton(text="Download 📥", url=f"{dlurl}"),
+                    InlineKeyboardButton(text="🎬 Mở Youtube", url=f"{url}"),
+                    InlineKeyboardButton(text="Tải xuống 📥", url=f"{dlurl}"),
                 ],
-                [InlineKeyboardButton(text="❌ Close", callback_data="ccls")],
+                [InlineKeyboardButton(text="❌ Đóng", callback_data="ccls")],
             ]
         )
         requested_by = message.from_user.first_name
@@ -526,7 +526,7 @@ async def play(_, message: Message):
         for i in message.command[1:]:
             query += " " + str(i)
         print(query)
-        await lel.edit("🎵 **Processing**")
+        await lel.edit("🎵 **Đang xử lý**")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
             results = YoutubeSearch(query, max_results=1).to_dict()
@@ -557,10 +557,10 @@ async def play(_, message: Message):
                     InlineKeyboardButton("Menu ⏯ ", callback_data="cmenu"),
                 ],
                 [
-                    InlineKeyboardButton(text="🎬 YouTube", url=f"{url}"),
-                    InlineKeyboardButton(text="Download 📥", url=f"{dlurl}"),
+                    InlineKeyboardButton(text="🎬 Mở Yourube", url=f"{url}"),
+                    InlineKeyboardButton(text="Tải xuống 📥", url=f"{dlurl}"),
                 ],
-                [InlineKeyboardButton(text="❌ Close", callback_data="ccls")],
+                [InlineKeyboardButton(text="❌ Đóng", callback_data="ccls")],
             ]
         )
         requested_by = message.from_user.first_name
@@ -595,7 +595,7 @@ async def play(_, message: Message):
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
-            caption="▶️ **Playing** the song requested by {} via Youtube Music 😜 in Linked Channel".format(
+            caption="▶️ *Bắt đầu chơi** bài hát được yêu cầu bởi {} via @sabo_ibot 😜 trong Kênh".format(
                 message.from_user.mention()
             ),
         )
@@ -607,7 +607,7 @@ async def play(_, message: Message):
 @authorized_users_only
 async def deezer(client: Client, message_: Message):
     global que
-    lel = await message_.reply("🔄 **Processing**")
+    lel = await message_.reply("🔄 **Đang xử lý**")
 
     try:
       conchat = await client.get_chat(message_.chat.id)
