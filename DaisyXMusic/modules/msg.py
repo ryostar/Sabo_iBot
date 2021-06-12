@@ -49,7 +49,7 @@ kênh cũng có thể được sử dụng `c` ( `/cplay` = `/channelplay` )
 """,
 
 f"""
-** =>> Các công cụ khác 🧑‍🔧**
+**=>> Các công cụ khác 🧑‍🔧**
 
 - `/musicplayer [on/off]` : Bật/Tắt Trình phát nhạc
 - `/admincache` : Cập nhật thông tin quản trị viên của nhóm của bạn. Hãy thử nếu bot không nhận ra quản trị viên
