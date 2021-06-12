@@ -28,7 +28,7 @@ from DaisyXMusic.services.callsmusic import callsmusic
 
 
 
-@Client.on_message(filters.command(["channelpause","cpause"]) & filters.group & ~filters.edited)
+@Client.on_message(filters.command(["ctamdung","cpause"]) & filters.group & ~filters.edited)
 @errors
 @authorized_users_only
 async def pause(_, message: Message):
@@ -37,19 +37,19 @@ async def pause(_, message: Message):
       conid = conchat.linked_chat.id
       chid = conid
     except:
-      await message.reply("Is chat even linked")
+      await message.reply("Nhóm thậm chí còn chưa được liên kết")
       return    
     chat_id = chid
     if (chat_id not in callsmusic.pytgcalls.active_calls) or (
         callsmusic.pytgcalls.active_calls[chat_id] == "paused"
     ):
-        await message.reply_text("❗ Nothing is playing!")
+        await message.reply_text("❗ Không có bài hát nào đang phát để tạm dừng!")
     else:
         callsmusic.pytgcalls.pause_stream(chat_id)
-        await message.reply_text("▶️ Paused!")
+        await message.reply_text("▶️ Đã tạm dừng phát nhạc trên kênh!")
 
 
-@Client.on_message(filters.command(["channelresume","cresume"]) & filters.group & ~filters.edited)
+@Client.on_message(filters.command(["ctieptuc","cresume"]) & filters.group & ~filters.edited)
 @errors
 @authorized_users_only
 async def resume(_, message: Message):
@@ -58,19 +58,19 @@ async def resume(_, message: Message):
       conid = conchat.linked_chat.id
       chid = conid
     except:
-      await message.reply("Is chat even linked")
+      await message.reply("Nhóm thậm chí còn chưa liên kết với kênh")
       return    
     chat_id = chid
     if (chat_id not in callsmusic.pytgcalls.active_calls) or (
         callsmusic.pytgcalls.active_calls[chat_id] == "playing"
     ):
-        await message.reply_text("❗ Nothing is paused!")
+        await message.reply_text("❗ Không có bài hát nào đang tạm dừng!")
     else:
         callsmusic.pytgcalls.resume_stream(chat_id)
-        await message.reply_text("⏸ Resumed!")
+        await message.reply_text("⏸ Đã tiếp tục phát nhạc trên kênh!")
 
 
-@Client.on_message(filters.command(["channelend","cend"]) & filters.group & ~filters.edited)
+@Client.on_message(filters.command(["coff","cend"]) & filters.group & ~filters.edited)
 @errors
 @authorized_users_only
 async def stop(_, message: Message):
@@ -79,11 +79,11 @@ async def stop(_, message: Message):
       conid = conchat.linked_chat.id
       chid = conid
     except:
-      await message.reply("Is chat even linked")
+      await message.reply("Nhóm thậm chí còn chưa liên kết với kênh")
       return    
     chat_id = chid
     if chat_id not in callsmusic.pytgcalls.active_calls:
-        await message.reply_text("❗ Nothing is streaming!")
+        await message.reply_text("❗ Không có trong cuộc gọi thoại nào!")
     else:
         try:
             callsmusic.queues.clear(chat_id)
@@ -91,10 +91,10 @@ async def stop(_, message: Message):
             pass
 
         callsmusic.pytgcalls.leave_group_call(chat_id)
-        await message.reply_text("❌ Stopped streaming!")
+        await message.reply_text("❌ Đã dừng bot phát nhạc!")
 
 
-@Client.on_message(filters.command(["channelskip","cskip"]) & filters.group & ~filters.edited)
+@Client.on_message(filters.command(["cboqua","cskip"]) & filters.group & ~filters.edited)
 @errors
 @authorized_users_only
 async def skip(_, message: Message):
@@ -104,11 +104,11 @@ async def skip(_, message: Message):
       conid = conchat.linked_chat.id
       chid = conid
     except:
-      await message.reply("Is chat even linked")
+      await message.reply("Nhóm thấm chí còn chưa liên kết với kênh!")
       return    
     chat_id = chid
     if chat_id not in callsmusic.pytgcalls.active_calls:
-        await message.reply_text("❗ Nothing is playing to skip!")
+        await message.reply_text("❗ Không có bài nhạc nào đang phát để bỏ qua!")
     else:
         callsmusic.queues.task_done(chat_id)
 
@@ -124,7 +124,7 @@ async def skip(_, message: Message):
         skip = qeue.pop(0)
     if not qeue:
         return
-    await message.reply_text(f"- Skipped **{skip[0]}**\n- Now Playing **{qeue[0][0]}**")
+    await message.reply_text(f"- Bỏ qua **{skip[0]}**\n- Bắt đầu phát **{qeue[0][0]}**")
 
 
 @Client.on_message(filters.command("channeladmincache"))
@@ -135,7 +135,7 @@ async def admincache(client, message: Message):
       conid = conchat.linked_chat.id
       chid = conid
     except:
-      await message.reply("Is chat even linked")
+      await message.reply("Nhóm thấm chí còn chưa liên kết với kênh!")
       return
     set(
         chid,
@@ -144,4 +144,4 @@ async def admincache(client, message: Message):
             for member in await conchat.linked_chat.get_members(filter="administrators")
         ],
     )
-    await message.reply_text("❇️ Admin cache refreshed!")
+    await message.reply_text("❇️ Đã làm mới danh sách admin!")
