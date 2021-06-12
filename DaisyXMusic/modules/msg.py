@@ -51,13 +51,15 @@ kênh cũng có thể được sử dụng `c` ( `/cplay` = `/channelplay` )
 f"""
 **=>> Các công cụ khác 🧑‍🔧**
 
-- `/musicplayer [on/off]` : Bật/Tắt Trình phát nhạc
-- `/admincache` : Cập nhật thông tin quản trị viên của nhóm của bạn. Hãy thử nếu bot không nhận ra quản trị viên
-- `/userbotjoin` : Mời @{ASSISTANT_NAME} Userbot tham gia cuộc trò chuyện của bạn
+- /musicplayer [on/off] : Bật/Tắt Trình phát nhạc
+- /admincache : Cập nhật thông tin quản trị viên của nhóm của bạn. Hãy thử nếu bot không nhận ra quản trị viên
+- /userbotjoin : Mời @{ASSISTANT_NAME} Userbot tham gia cuộc trò chuyện của bạn
 
 **=>> Lệnh cho người dùng Sudo ⚔️**
 
- - `/userbotleaveall` - xóa trợ lý khỏi tất cả các cuộc trò chuyện
- - `/ib <trả lời tin nhắn>` - tin nhắn đã trả lời brodcast trên toàn cầu cho tất cả các cuộc trò chuyện
- - `/pmpermit [on/off]` - bật/tắt thông báo pmpermit
+ - /userbotleaveall - xóa trợ lý khỏi tất cả các cuộc trò chuyện
+ - /ib <trả lời tin nhắn> - tin nhắn đã trả lời brodcast trên toàn cầu cho tất cả các cuộc trò chuyện
+ - /pmpermit [on/off] - bật/tắt thông báo pmpermit
 *Người dùng Sudo có thể thực hiện bất kỳ lệnh nào trong bất kỳ nhóm nào
+
+"""
