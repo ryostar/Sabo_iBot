@@ -102,7 +102,7 @@ def updated_stats(chat, queue, vol=100):
         if len(que) > 0:
             stats += "\n\n"
             stats += "Âm lượng : {}%\n".format(vol)
-            stats += Hàng chờ : `{}`\n".format(len(que))
+            stats += "Hàng chờ : `{}`\n".format(len(que))
             stats += "Hiện tại : **{}**\n".format(queue[0][0])
             stats += "Bởi : {}".format(queue[0][1].mention)
     else:
