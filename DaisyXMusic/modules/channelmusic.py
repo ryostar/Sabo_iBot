@@ -60,7 +60,7 @@ chat_id = None
 
 
 
-@Client.on_message(filters.command(["cdanhsach","cplaylist"]) & filters.group & ~filters.edited)
+@Client.on_message(filters.command(["channelplaylist","cplaylist"]) & filters.group & ~filters.edited)
 async def playlist(client, message):
     try:
       lel = await client.get_chat(message.chat.id)
@@ -132,7 +132,7 @@ def r_ply(type_):
     return mar
 
 
-@Client.on_message(filters.command(["kenhhientai","ccurrent"]) & filters.group & ~filters.edited)
+@Client.on_message(filters.command(["channelcurrent","ccurrent"]) & filters.group & ~filters.edited)
 async def ee(client, message):
     try:
       lel = await client.get_chat(message.chat.id)
@@ -240,7 +240,7 @@ async def m_cb(b, cb):
         if (chet_id not in callsmusic.pytgcalls.active_calls) or (
             callsmusic.pytgcalls.active_calls[chet_id] == "paused"
         ):
-            await cb.answer("Chat is not connected!", show_alert=True)
+            await cb.answer("Trò chuyện không được kết nối!", show_alert=True)
         else:
             callsmusic.pytgcalls.pause_stream(chet_id)
 
@@ -291,12 +291,12 @@ async def m_cb(b, cb):
             await cb.answer("Trò chuyện chưa được kết nối hoặc đã chơi", show_alert=True)
         else:
             callsmusic.pytgcalls.resume_stream(chet_id)
-            await cb.answer("Music Resumed!")
+            await cb.answer("Âm nhạc tiếp tục!")
     elif type_ == "cpuse":
         if (chet_id not in callsmusic.pytgcalls.active_calls) or (
             callsmusic.pytgcalls.active_calls[chet_id] == "paused"
         ):
-            await cb.answer("Chat is not connected or already paused", show_alert=True)
+            await cb.answer("Trò chuyện chưa được kết nối hoặc đã bị tạm dừng", show_alert=True)
         else:
             callsmusic.pytgcalls.pause_stream(chet_id)
 
@@ -624,7 +624,7 @@ async def deezer(client: Client, message_: Message):
     try:
         user = await USER.get_me()
     except:
-        user.first_name = "DaisyMusic"
+        user.first_name = "NangMp3"
     usar = user
     wew = usar.id
     try:
