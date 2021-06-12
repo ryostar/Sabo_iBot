@@ -1,111 +1,63 @@
-# Daisyxmusic (Telegram bot project )
-# Copyright (C) 2021  Inukaasith
+** = >> Phát bài hát 🎧**
 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
+- `/play` : Phát bài hát được yêu cầu
+- `/play [yt url]` : Phát url yt đã cho
+- `/play [âm thanh trả lời]` : Phát âm thanh đã trả lời
+- `/dplay` : Phát bài hát qua deezer
+- `/splay` : Phát bài hát qua jio saavn
+- `/ytplay` : Phát trực tiếp bài hát qua Youtube Music
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+**=>> Phát lại ⏯**
 
-import os
-from DaisyXMusic.config import SOURCE_CODE,ASSISTANT_NAME,PROJECT_NAME,SUPPORT_GROUP,UPDATES_CHANNEL
-class Messages():
-      START_MSG = "**Hello 👋 [{}](tg://user?id={})!**\n\n🤖 I am an advanced bot created for playing music in the voice chats of Telegram Groups & Channels.\n\n✅ Send me /help for more info."
-      HELP_MSG = [
-        ".",
-f"""
-**Hey 👋 Welcome back to {PROJECT_NAME}
+- `/player` : Mở menu Cài đặt của trình phát
+- `/skip` : Bỏ qua bản nhạc hiện tại
+- `/pause` : Tạm dừng bản nhạc
+- `/resume` : Tiếp tục bản nhạc đã tạm dừng
+- `/end` : Dừng phát lại phương tiện
+- `/current` : Hiển thị bản nhạc Đang phát hiện tại
+- `/playlist` : Hiển thị danh sách phát
 
-⚪️ {PROJECT_NAME} can play music in your group's voice chat as well as channel voice chats
-
-⚪️ Assistant name >> @{ASSISTANT_NAME}\n\nClick next for instructions**
-""",
-
-f"""
-**Setting up**
-
-1) Make bot admin (Group and in channel if use cplay)
-2) Start a voice chat
-3) Try /play [song name] for the first time by an admin
-*) If userbot joined enjoy music, If not add @{ASSISTANT_NAME} to your group and retry
-
-**For Channel Music Play**
-1) Make me admin of your channel 
-2) Send /userbotjoinchannel in linked group
-3) Now send commands in linked group
-
-**Commands**
-
-**=>> Song Playing 🎧**
-
-- /play: Play the requestd song
-- /play [yt url] : Play the given yt url
-- /play [reply yo audio]: Play replied audio
-- /dplay: Play song via deezer
-- /splay: Play song via jio saavn
-- /ytplay: Directly play song via Youtube Music
-
-**=>> Playback ⏯**
-
-- /player: Open Settings menu of player
-- /skip: Skips the current track
-- /pause: Pause track
-- /resume: Resumes the paused track
-- /end: Stops media playback
-- /current: Shows the current Playing track
-- /playlist: Shows playlist
-
-*Player cmd and all other cmds except /play, /current  and /playlist  are only for admins of the group.
+*Cmd trình phát và tất cả cmd khác ngoại trừ /play, /current và /playlist chỉ dành cho quản trị viên của nhóm.
 """,
         
 f"""
-**=>> Channel Music Play 🛠**
+**=>> Kênh Chơi Nhạc 🛠 **
 
-⚪️ For linked group admins only:
+⚪️ Chỉ dành cho quản trị viên nhóm được liên kết:
 
-- /cplay [song name] - play song you requested
-- /cdplay [song name] - play song you requested via deezer
-- /csplay [song name] - play song you requested via jio saavn
-- /cplaylist - Show now playing list
-- /cccurrent - Show now playing
-- /cplayer - open music player settings panel
-- /cpause - pause song play
-- /cresume - resume song play
-- /cskip - play next song
-- /cend - stop music play
-- /userbotjoinchannel - invite assistant to your chat
+- `/cplay [tên bài hát]` - phát bài hát bạn yêu cầu
+- `/cdplay [tên bài hát]` - phát bài hát bạn yêu cầu qua deezer
+- `/csplay [tên bài hát]` - phát bài hát bạn yêu cầu qua jio saavn
+- `/cplaylist` - Hiển thị danh sách đang phát
+- `/cccurrent` - Hiện đang phát
+- `/cplayer` - mở bảng cài đặt trình phát nhạc
+- `/cpause` - tạm dừng phát bài hát
+- `/cresume` - tiếp tục phát bài hát
+- `/cskip` - phát bài hát tiếp theo
+- `/cend` - dừng phát nhạc
+- `/userbotjoinchannel` - mời trợ lý vào cuộc trò chuyện của bạn
 
-channel is also can be used instead of c ( /cplay = /channelplay )
+kênh cũng có thể được sử dụng `c` ( `/cplay` = `/channelplay` )
 
-⚪️ If you donlt like to play in linked group:
+⚪️ Nếu bạn không muốn chơi trong nhóm được liên kết:
 
-1) Get your channel ID.
-2) Create a group with tittle: Channel Music: your_channel_id
-3) Add bot as Channel admin with full perms
-4) Add @{ASSISTANT_NAME} to the channel as an admin.
-5) Simply send commands in your group.
+1) Nhận ID kênh của bạn.
+2) Tạo nhóm với tên `Channel Music: your_channel_id`
+3) Thêm bot làm quản trị viên Kênh với đầy đủ các quyền
+4) Thêm @{ASSISTANT_NAME} vào kênh với tư cách quản trị viên.
+5) Đơn giản chỉ cần gửi lệnh trong nhóm của bạn.
 """,
 
 f"""
-**=>> More tools 🧑‍🔧**
+** =>> Các công cụ khác 🧑‍🔧**
 
-- /musicplayer [on/off]: Enable/Disable Music player
-- /admincache: Updates admin info of your group. Try if bot isn't recognize admin
-- /userbotjoin: Invite @{ASSISTANT_NAME} Userbot to your chat
+- `/musicplayer [on/off]` : Bật/Tắt Trình phát nhạc
+- `/admincache` : Cập nhật thông tin quản trị viên của nhóm của bạn. Hãy thử nếu bot không nhận ra quản trị viên
+- `/userbotjoin` : Mời @{ASSISTANT_NAME} Userbot tham gia cuộc trò chuyện của bạn
 
-**=>> Commands for Sudo Users ⚔️**
+**=>> Lệnh cho người dùng Sudo ⚔️**
 
- - /userbotleaveall - remove assistant from all chats
- - /gcast <reply to message> - globally brodcast replied message to all chats
- - /pmpermit [on/off] - enable/disable pmpermit message
-*Sudo Users can execute any command in any groups
-
-"""
-      ]
+ - `/userbotleaveall` - xóa trợ lý khỏi tất cả các cuộc trò chuyện
+ - `/ib <trả lời tin nhắn>` - tin nhắn đã trả lời brodcast trên toàn cầu cho tất cả các cuộc trò chuyện
+ - `/pmpermit [on/off]` - bật/tắt thông báo pmpermit
+*Người dùng Sudo có thể thực hiện bất kỳ lệnh nào trong bất kỳ nhóm nào
