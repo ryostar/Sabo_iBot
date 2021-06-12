@@ -45,17 +45,17 @@ async def addchannel(client, message):
         await USER.send_message(message.chat.id, "I joined here as you requested")
     except UserAlreadyParticipant:
         await message.reply_text(
-            "<b>helper already in your chat</b>",
+            "<b>@SaboMP3 đã tham gia!</b>",
         )
     except Exception as e:
         print(e)
         await message.reply_text(
-            f"<b>🛑 Flood Wait Error 🛑 \n User {user.first_name} couldn't join your group due to heavy join requests for userbot! Make sure user is not banned in group."
-            "\n\nOr manually add @DaisyXhelper to your Group and try again</b>",
+            f"<b>🛑 Flood Wait Error 🛑 \n Tài khoản {user.first_name} không thể tham gia nhóm của bạn do có nhiều yêu cầu tham gia cho userbot!  Đảm bảo người dùng không bị cấm trong nhóm."
+            "\n\nhoặc thêm thủ công @SaboMP3 vào nhóm</b>",
         )
         return
     await message.reply_text(
-        "<b>helper userbot joined your chat</b>",
+        "<b>@SaboMP3 đã tham gia!</b>",
     )
 
 
@@ -89,7 +89,7 @@ async def bye(client, message):
         await client.send_message(message.chat.id, f"Left {left} chats. Failed {failed} chats.")
     
     
-@Client.on_message(filters.command(["userbotjoinchannel","ubjoinc"]) & ~filters.private & ~filters.bot)
+@Client.on_message(filters.command(["mp3","ubjoinc"]) & ~filters.private & ~filters.bot)
 @authorized_users_only
 @errors
 async def addcchannel(client, message):
@@ -112,7 +112,7 @@ async def addcchannel(client, message):
     try:
         user = await USER.get_me()
     except:
-        user.first_name = "DaisyMusic"
+        user.first_name = "SaboMP3"
 
     try:
         await USER.join_chat(invitelink)
@@ -126,7 +126,7 @@ async def addcchannel(client, message):
         print(e)
         await message.reply_text(
             f"<b>🛑 Flood Wait Error 🛑 \n User {user.first_name} couldn't join your channel due to heavy join requests for userbot! Make sure user is not banned in channel."
-            "\n\nOr manually add @DaisyXhelper to your Group and try again</b>",
+            "\n\nOr manually add @SaboMP3 to your Group and try again</b>",
         )
         return
     await message.reply_text(
